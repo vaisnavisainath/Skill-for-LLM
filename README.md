@@ -70,7 +70,6 @@ The skill does not give visa or legal advice, does not guarantee selection, and 
 
 ## Author
 
-Prajesh Anand
-Prepared for Vaisnavi Sainath
+Vaisnavi Sainath
 Department of Humanities and Social Sciences, IIT (ISM) Dhanbad
 Monsoon Semester 2026

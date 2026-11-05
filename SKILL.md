@@ -2,7 +2,7 @@
 name: global-opportunity-navigator
 description: Helps students and early-career researchers, especially in the humanities and social sciences, find, filter, rank, and apply to global opportunities such as scholarships, fellowships, PhD programs, visiting research positions, archive grants, summer schools, exchange programs, internships, and jobs. Use this skill whenever the user asks where to apply abroad, wants scholarships or internships matched to their profile, asks about deadlines or eligibility, wants an application plan, or wants help drafting a statement of purpose or outreach email, even if they never say "opportunity".
 metadata:
-  author: Prajesh Anand
+  author: Vaisnavi Sainath
   version: "1.0"
 ---
 
@@ -10,8 +10,7 @@ metadata:
 ============================================================
 Topic: SKILL for LLM - Global Opportunity Navigator
 ============================================================
-Author Name(s): Prajesh Anand
-Prepared for: Vaisnavi Sainath
+Author Name(s): Vaisnavi Sainath
 Short Description: A modular skill that teaches an LLM to build a
 profile, search current sources, filter and rank global
 opportunities (scholarships, fellowships, research stays, PhDs)
