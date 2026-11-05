@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Opportunity Navigator | A skill to find scholarships, PhDs and fellowships abroad</title>
+<meta name="description" content="A skill that helps humanities and social science students find, filter, rank and apply to global opportunities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pine: #1e4d43;
+  --pine-dark: #123229;
+  --mint: #e8f1ed;
+  --line: #b7cfc6;
+  --marigold: #c98318;
+  --ink: #1a2723;
+  --muted: #566763;
+  --white: #ffffff;
+  --error: #a32020;
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --sans: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--pine-dark); }
+body { margin: 0; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6; color: var(--ink); background: var(--white); }
+a { color: var(--pine); }
+:focus-visible { outline: 3px solid var(--marigold); outline-offset: 3px; }
+
+header { background: var(--pine-dark); color: var(--white); padding: 34px 24px 0; }
+.head-inner { max-width: 900px; margin: 0 auto; }
+header h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; margin: 0; }
+header p { margin: 8px 0 0; color: #c9ded6; max-width: 56ch; }
+nav { margin-top: 26px; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+nav a { display: block; padding: 12px 18px; color: #dcebe5; text-decoration: none; font-weight: 600; border-bottom: 4px solid transparent; }
+nav a:hover { background: rgba(255,255,255,.08); }
+nav a[aria-current="page"] { color: var(--white); border-bottom-color: var(--marigold); }
+
+main { max-width: 900px; margin: 0 auto; padding: 36px 24px 56px; }
+.page[hidden] { display: none; }
+.page h2 { font-family: var(--serif); font-size: 1.9rem; margin: 0 0 12px; color: var(--pine-dark); }
+.page h3 { font-family: var(--serif); font-size: 1.3rem; margin: 0 0 8px; color: var(--pine-dark); }
+.lead { font-size: 1.15rem; max-width: 62ch; }
+.block { border-left: 4px solid var(--marigold); padding: 2px 0 2px 18px; margin: 28px 0; }
+.block p, .block ul { margin: 6px 0; max-width: 66ch; }
+.block ul { padding-left: 20px; }
+.btn { display: inline-block; padding: 12px 22px; background: var(--pine); color: var(--white); border: 2px solid var(--pine); border-radius: 4px; font: 600 1rem var(--sans); text-decoration: none; cursor: pointer; }
+.btn:hover { background: var(--pine-dark); border-color: var(--pine-dark); }
+.btn.secondary { background: var(--white); color: var(--pine); }
+.btn.secondary:hover { background: var(--mint); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+
+fieldset { border: 1px solid var(--line); border-radius: 4px; margin: 22px 0; padding: 8px 18px 18px; }
+legend { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--pine-dark); padding: 0 8px; }
+.field { display: block; margin-top: 14px; font-weight: 600; }
+.field input, .field select { display: block; width: 100%; margin-top: 6px; padding: 11px; font: 400 1rem var(--sans); color: var(--ink); border: 1px solid #86a89b; border-radius: 4px; background: var(--white); }
+.hint { display: block; font-weight: 400; font-size: .9rem; color: var(--muted); }
+.row { display: grid; gap: 0 18px; grid-template-columns: 1fr; }
+.toggle { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; cursor: pointer; }
+.toggle input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--pine); flex: none; }
+.toggle.off { opacity: .55; cursor: not-allowed; }
+.toggle small { display: block; color: var(--muted); font-size: .9rem; }
+.error { color: var(--error); font-weight: 600; min-height: 1.5em; margin: 8px 0 0; }
+.note { color: var(--muted); min-height: 1.5em; margin: 4px 0 0; }
+#result { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; background: var(--mint); border: 1px solid var(--line); padding: 16px; border-radius: 4px; font: .95rem/1.5 ui-monospace, Consolas, monospace; margin: 0; }
+.status { min-height: 1.5em; color: var(--pine-dark); font-weight: 600; }
+
+.author-card { border: 1px solid var(--line); border-radius: 4px; padding: 22px; margin-top: 20px; }
+.author-card dl { margin: 0; display: grid; gap: 4px 20px; grid-template-columns: 1fr; }
+.author-card dt { font-weight: 600; color: var(--muted); margin-top: 10px; }
+.author-card dd { margin: 0; font-size: 1.1rem; }
+
+footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
+.foot-inner { max-width: 900px; margin: 0 auto; font-size: .95rem; }
+
+@media (min-width: 640px) {
+  .row { grid-template-columns: 1fr 1fr; }
+  .author-card dl { grid-template-columns: 150px 1fr; }
+  .author-card dt { margin-top: 0; }
+}
+@media (max-width: 420px) {
+  header { padding: 26px 16px 0; }
+  main { padding: 28px 16px 40px; }
+  nav a { padding: 10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <h1>Global Opportunity Navigator</h1>
+    <p>A skill to find, rank and plan applications for scholarships, PhDs and fellowships abroad</p>
+    <nav aria-label="Main menu">
+      <ul>
+        <li><a href="#home" data-page="home">Home</a></li>
+        <li><a href="#find" data-page="find">Find Opportunities</a></li>
+        <li><a href="#author" data-page="author">Author</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <section class="page" id="page-home" aria-labelledby="h-home">
+    <h2 id="h-home">About the project</h2>
+    <p class="lead">Global Opportunity Navigator is a modular LLM skill that turns "I want to study or work abroad" into a short, verified, ranked list with deadlines and a dated plan.</p>
+
+    <div class="block">
+      <h3>What it does</h3>
+      <ul>
+        <li>Builds your profile: level, field, interests, citizenship, goal and window.</li>
+        <li>Searches current official pages for PhDs, scholarships, fellowships, archive grants, summer schools, exchanges, internships and jobs.</li>
+        <li>Removes what you are not eligible for and says why.</li>
+        <li>Ranks the rest and labels each one reach, target or safe.</li>
+        <li>Gives a timeline back from each deadline, a document checklist and your next three actions.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>How it works</h3>
+      <p>Eight modules work in sequence: Profile, Discovery, Filter, Ranking, Verification, Action Plan, Application Support and Output. Six switches shape each search: Fully funded only, Open deadlines only, Strict source verification, Include application fees, Include rolling deadlines and Balanced mix.</p>
+      <p>The skill never invents a programme, deadline, amount or link. If it cannot verify a detail, it marks it unverified and gives the official URL. It flags any scheme that asks for a fee to be selected.</p>
+    </div>
+
+    <div class="block">
+      <h3>Example queries</h3>
+      <ul>
+        <li>Find fully funded PhD programs in cultural studies or sociology abroad.</li>
+        <li>Which fellowships can an Indian humanities researcher apply for to visit an archive overseas?</li>
+        <li>Make a month by month plan for applying to PhD programs in Europe.</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="#find">Find opportunities</a>
+    </div>
+  </section>
+
+  <section class="page" id="page-find" aria-labelledby="h-find" hidden>
+    <h2 id="h-find">Find opportunities</h2>
+    <p class="lead">Fill in your profile and preferences, generate the settings, then give them to the skill.</p>
+
+    <form id="finder" novalidate>
+      <fieldset>
+        <legend>Your profile</legend>
+        <div class="row">
+          <label class="field" for="level">Current level
+            <select id="level">
+              <option value="Bachelor's student">Bachelor's student</option>
+              <option value="Master's student" selected>Master's student</option>
+              <option value="Master's graduate">Master's graduate</option>
+              <option value="PhD student">PhD student</option>
+              <option value="Working professional">Working professional</option>
+            </select>
+          </label>
+          <label class="field" for="citizenship">Citizenship
+            <input type="text" id="citizenship" placeholder="e.g. Indian" autocomplete="off">
+            <span class="hint">Needed to check eligibility</span>
+          </label>
+        </div>
+        <label class="field" for="field">Field and research interests
+          <input type="text" id="field" placeholder="e.g. digital humanities, sociology of work" autocomplete="off">
+        </label>
+        <div class="row">
+          <label class="field" for="goal">Goal
+            <select id="goal">
+              <option value="Any">Any</option>
+              <option value="PhD">PhD</option>
+              <option value="Master's">Master's</option>
+              <option value="Research stay or visiting fellowship">Research stay or visiting fellowship</option>
+              <option value="Archive or library grant">Archive or library grant</option>
+              <option value="Summer or methods school">Summer or methods school</option>
+              <option value="Exchange program">Exchange program</option>
+              <option value="Internship">Internship</option>
+              <option value="Job">Job</option>
+            </select>
+          </label>
+          <label class="field" for="window">Start window
+            <input type="text" id="window" placeholder="e.g. autumn 2027" autocomplete="off">
+          </label>
+        </div>
+        <div class="row">
+          <label class="field" for="regions">Preferred countries or regions
+            <input type="text" id="regions" placeholder="e.g. UK, Germany, Canada" autocomplete="off">
+            <span class="hint">Optional</span>
+          </label>
+          <label class="field" for="count">Number of results
+            <input type="number" id="count" value="8" min="1" max="10" inputmode="numeric">
+            <span class="hint">Between 1 and 10</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Modules</legend>
+        <p class="hint">Profile, Discovery, Filter and Output are always on.</p>
+        <label class="toggle"><input type="checkbox" id="mRanking" checked><span>Ranking Module<small>Score and label each option reach, target or safe.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="mVerification" checked><span>Verification Module<small>Check deadlines, funding and links on official pages.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="mPlan" checked><span>Action Plan Module<small>Timeline, document checklist and next three actions.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="mSupport"><span>Application Support Module<small>Help with SOP, cold email, proposal and CV.</small></span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Feature switches</legend>
+        <label class="toggle"><input type="checkbox" id="fundedOnly" checked><span>Fully funded only<small>Keep only opportunities that cover costs or give a stipend.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="openOnly" checked><span>Open deadlines only<small>Remove opportunities whose deadline has passed.</small></span></label>
+        <label class="toggle" id="t-strict"><input type="checkbox" id="strict" checked><span>Strict source verification<small>Include only opportunities confirmed on an official page.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="fees"><span>Include programmes with application fees<small>Keep them, clearly flagged. Pay to be selected schemes stay out.</small></span></label>
+        <label class="toggle"><input type="checkbox" id="rolling" checked><span>Include rolling deadlines<small>Keep opportunities that accept applications all year.</small></span></label>
+        <label class="toggle" id="t-balanced"><input type="checkbox" id="balanced" checked><span>Balanced reach, target and safe mix<small>Aim for a spread across the final list.</small></span></label>
+      </fieldset>
+
+      <p class="error" id="error" role="alert"></p>
+      <p class="note" id="note"></p>
+      <div class="actions">
+        <button type="submit" class="btn">Generate settings</button>
+      </div>
+    </form>
+
+    <h3 style="margin-top:32px">Generated configuration</h3>
+    <pre id="result" aria-live="polite">Your settings will appear here.</pre>
+    <div class="actions">
+      <button type="button" class="btn secondary" id="copyBtn" disabled>Copy settings</button>
+      <button type="button" class="btn secondary" id="downloadBtn" disabled>Download switches.json</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </section>
+
+  <section class="page" id="page-author" aria-labelledby="h-author" hidden>
+    <h2 id="h-author">Author</h2>
+    <div class="author-card">
+      <dl>
+        <dt>Name</dt>
+        <dd>Prajesh Anand</dd>
+        <dt>Prepared for</dt>
+        <dd>Vaisnavi Sainath</dd>
+        <dt>Affiliation</dt>
+        <dd>Department of Humanities and Social Sciences, IIT (ISM) Dhanbad</dd>
+        <dt>Semester</dt>
+        <dd>Monsoon Semester 2026</dd>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">Global Opportunity Navigator by Prajesh Anand. Always confirm deadlines and eligibility on the official page before you apply.</div>
+</footer>
+
+<script>
+(function () {
+  var pages = ["home", "find", "author"];
+  var titles = { home: "Home", find: "Find Opportunities", author: "Author" };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function show(name, moveFocus) {
+    if (pages.indexOf(name) === -1) name = "home";
+    pages.forEach(function (p) { $("page-" + p).hidden = (p !== name); });
+    document.querySelectorAll("nav a").forEach(function (a) {
+      if (a.dataset.page === name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    document.title = titles[name] + " | Global Opportunity Navigator";
+    window.scrollTo(0, 0);
+    if (moveFocus) $("main").focus({ preventScroll: true });
+  }
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1), true); });
+  show(location.hash.slice(1), false);
+
+  /* Switch dependencies */
+  function syncDependencies() {
+    var ver = $("mVerification").checked;
+    var rank = $("mRanking").checked;
+    $("strict").disabled = !ver;
+    $("t-strict").classList.toggle("off", !ver);
+    $("balanced").disabled = !rank;
+    $("t-balanced").classList.toggle("off", !rank);
+  }
+  $("mVerification").addEventListener("change", syncDependencies);
+  $("mRanking").addEventListener("change", syncDependencies);
+  syncDependencies();
+
+  var latest = "";
+  function setOutputButtons(on) {
+    $("copyBtn").disabled = !on;
+    $("downloadBtn").disabled = !on;
+  }
+
+  $("finder").addEventListener("submit", function (e) {
+    e.preventDefault();
+    $("status").textContent = "";
+    var ver = $("mVerification").checked;
+    var rank = $("mRanking").checked;
+
+    var settings = {
+      profile: {
+        level: $("level").value,
+        citizenship: $("citizenship").value.trim(),
+        field_and_interests: $("field").value.trim(),
+        goal: $("goal").value,
+        start_window: $("window").value.trim(),
+        preferred_regions: $("regions").value.trim()
+      },
+      number_of_results: Number($("count").value),
+      modules: {
+        profile: true, discovery: true, filter: true,
+        ranking: rank,
+        verification: ver,
+        action_plan: $("mPlan").checked,
+        application_support: $("mSupport").checked,
+        output: true
+      },
+      switches: {
+        fully_funded_only: $("fundedOnly").checked,
+        open_deadlines_only: $("openOnly").checked,
+        strict_verification: ver && $("strict").checked,
+        include_application_fees: $("fees").checked,
+        include_rolling_deadlines: $("rolling").checked,
+        balanced_mix: rank && $("balanced").checked
+      }
+    };
+
+    var msg = "";
+    if (!settings.profile.citizenship) msg = "Enter your citizenship. It is needed to check eligibility.";
+    else if (!settings.profile.field_and_interests) msg = "Enter your field and research interests.";
+    else if (!Number.isInteger(settings.number_of_results) ||
+             settings.number_of_results < 1 || settings.number_of_results > 10)
+      msg = "Enter a number of results between 1 and 10.";
+
+    $("error").textContent = msg;
+    $("note").textContent = (!msg && settings.switches.fully_funded_only && settings.switches.include_application_fees)
+      ? "Fully funded only and application fees are both on. The skill will ask which one wins if they conflict."
+      : "";
+    if (msg) { setOutputButtons(false); return; }
+
+    latest = JSON.stringify(settings, null, 2);
+    $("result").textContent = latest;
+    setOutputButtons(true);
+    $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+
+  $("copyBtn").addEventListener("click", function () {
+    var done = function () { $("status").textContent = "Settings copied."; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(latest).then(done, function () {
+        $("status").textContent = "Copy failed. Select the text above and copy it manually.";
+      });
+    } else {
+      $("status").textContent = "Copy is not available here. Select the text above and copy it manually.";
+    }
+  });
+
+  $("downloadBtn").addEventListener("click", function () {
+    var url = URL.createObjectURL(new Blob([latest], { type: "application/json" }));
+    var a = document.createElement("a");
+    a.href = url; a.download = "switches.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    $("status").textContent = "switches.json downloaded.";
+  });
+})();
+</script>
+</body>
+</html>
