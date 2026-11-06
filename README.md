@@ -50,11 +50,11 @@ Global Opportunity Navigator is a modular LLM skill that helps students and earl
 
 ## Project Structure
 
-global-opportunity-navigator/
+Skill-for-LLM/
 - SKILL.md
 - references/
 - config/
-- examples/
+- examples/ (test-cases.md, worked-example.md)
 - index.html
 - README.md
 

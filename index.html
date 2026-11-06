@@ -137,6 +137,36 @@ footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
       </ul>
     </div>
 
+<div class="block">
+      <h3>Method</h3>
+      <p>The skill is built as eight small modules that the model opens only when it reaches that step. SKILL.md holds the role, the principles and the workflow, and each file in references/ holds one task. This keeps the main instructions short and loads detail only when needed, an approach Anthropic describes for Agent Skills.</p>
+      <p>Behaviour is configurable. Six switches (fully funded only, open deadlines only, strict verification, application fees, rolling deadlines, balanced mix) are stored in config/switches.json, and this website builds a settings file the user can give to the skill. Ten test cases in examples/test-cases.md state the expected behaviour, and examples/worked-example.md shows a finished output.</p>
+    </div>
+
+    <div class="block">
+      <h3>Design choice: verify, never guess</h3>
+      <p>Deadlines, funding amounts and eligibility change every cycle, and a wrong date can cost an applicant a year. The skill therefore treats an unverified detail as unusable: it writes "unverified", gives the official URL, and returns fewer results rather than padding the list. It also removes any scheme that asks for a fee to be selected or guarantees selection.</p>
+    </div>
+
+    <div class="block">
+      <h3>Limitations</h3>
+      <ul>
+        <li>The full workflow needs an LLM application with skill loading and web search. Without search the skill can give only unverified leads.</li>
+        <li>Reach, target and safe labels are qualitative judgements. The skill gives no percentage chances and does not predict admission.</li>
+        <li>It does not give visa or legal advice.</li>
+        <li>It has been checked against written test cases and one worked example, not against a large set of real user sessions.</li>
+        <li>Funding rules vary by provider and cycle, so every result must be confirmed on the official page.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>References</h3>
+      <ul>
+        <li>Anthropic. (2025, October 16). <em>Equipping agents for the real world with Agent Skills</em>. Anthropic Engineering. <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener">https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+        <li>Nielsen, J. (2006, December 3). <em>Progressive disclosure</em>. Nielsen Norman Group. <a href="https://www.nngroup.com/articles/progressive-disclosure/" target="_blank" rel="noopener">https://www.nngroup.com/articles/progressive-disclosure/</a></li>
+      </ul>
+    </div>
+
     <div class="actions">
       <a class="btn" href="#find">Find opportunities</a>
     </div>
