@@ -68,6 +68,11 @@ legend { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color:
 #result { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; background: var(--mint); border: 1px solid var(--line); padding: 16px; border-radius: 4px; font: .95rem/1.5 ui-monospace, Consolas, monospace; margin: 0; }
 .status { min-height: 1.5em; color: var(--pine-dark); font-weight: 600; }
 
+.tablewrap { overflow-x: auto; margin: 14px 0; }
+.example table { border-collapse: collapse; font-size: .95rem; min-width: 100%; }
+.example th, .example td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+.example th { background: var(--mint); font-weight: 600; }
+.example h3 { margin-top: 28px; }
 .author-card { border: 1px solid var(--line); border-radius: 4px; padding: 22px; margin-top: 20px; }
 .author-card dl { margin: 0; display: grid; gap: 4px 20px; grid-template-columns: 1fr; }
 .author-card dt { font-weight: 600; color: var(--muted); margin-top: 10px; }
@@ -99,6 +104,7 @@ footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
       <ul>
         <li><a href="#home" data-page="home">Home</a></li>
         <li><a href="#find" data-page="find">Find Opportunities</a></li>
+        <li><a href="#example" data-page="example">Worked Example</a></li>
         <li><a href="#author" data-page="author">Author</a></li>
       </ul>
     </nav>
@@ -169,6 +175,7 @@ footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
 
     <div class="actions">
       <a class="btn" href="#find">Find opportunities</a>
+      <a class="btn secondary" href="#example">See a worked example</a>
     </div>
   </section>
 
@@ -262,6 +269,134 @@ footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
     <p class="status" id="status" role="status"></p>
   </section>
 
+  <section class="page" id="page-example" aria-labelledby="h-example" hidden>
+    <h2 id="h-example">Worked example</h2>
+    <p class="lead">A finished output for a sample profile. This run had no web search, so every deadline and amount is marked unverified.</p>
+    <div class="example">
+    <h3>About this example</h3>
+    <p>This example shows a run <strong>without web search</strong>. Under SKILL.md section 5 and the Error handling rules, the skill must then give only unverified leads with official URLs to check, and must not state deadlines or amounts from memory. Every deadline and funding cell below therefore reads <code>unverified</code>. The profile is a made-up sample. The programmes are real schemes, listed by name only, with no figures from memory.</p>
+    <p>Request: "Find fully funded master's or PhD options abroad in digital humanities or cultural studies for me."</p>
+    <p>Settings: <code>fully_funded_only</code> ON, <code>open_deadlines_only</code> ON, <code>strict_verification</code> OFF (needed here, because nothing can be verified without search), <code>include_application_fees</code> OFF, <code>balanced_mix</code> ON.</p>
+    <h3>1. Profile summary</h3>
+    <ul>
+    <li>M.A. English, final year; digital humanities and postcolonial literary studies; Indian citizen (stated by the user, not assumed).</li>
+    <li>Goal: fully funded master's or PhD abroad, starting autumn 2027.</li>
+    <li>Constraints: no application fees; documents on hand are CV, transcripts and a writing sample; two recommenders available.</li>
+    </ul>
+    <h3>2. Search brief</h3>
+    <p>"Fully funded master's and doctoral funding in digital humanities and cultural studies in Germany, the UK and the EU for an Indian humanities postgraduate, starting autumn 2027."</p>
+    <h3>3. Results</h3>
+    <p>Web search was not available, so every record is <code>verified: false</code>. Check each official page before acting.</p>
+    <div class="tablewrap"><table>
+    <thead>
+    <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Country</th>
+    <th>Funding</th>
+    <th>Deadline</th>
+    <th>Fit</th>
+    <th>Category</th>
+    <th>Link</th>
+    <th>Checked on</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>DAAD research grants for doctoral candidates</td>
+    <td>scholarship</td>
+    <td>Germany</td>
+    <td>unverified</td>
+    <td>unverified</td>
+    <td>4/5</td>
+    <td>Target</td>
+    <td>https://www.daad.de</td>
+    <td>not checked</td>
+    </tr>
+    <tr>
+    <td>Erasmus Mundus Joint Master's (digital humanities or cultural studies strands)</td>
+    <td>scholarship / master's</td>
+    <td>Several EU countries</td>
+    <td>unverified</td>
+    <td>unverified</td>
+    <td>4/5</td>
+    <td>Target</td>
+    <td>https://erasmus-plus.ec.europa.eu</td>
+    <td>not checked</td>
+    </tr>
+    <tr>
+    <td>Chevening Scholarships</td>
+    <td>scholarship</td>
+    <td>UK</td>
+    <td>unverified</td>
+    <td>unverified</td>
+    <td>3/5</td>
+    <td>Reach</td>
+    <td>https://www.chevening.org</td>
+    <td>not checked</td>
+    </tr>
+    <tr>
+    <td>European Summer University in Digital Humanities</td>
+    <td>summer_school</td>
+    <td>Germany</td>
+    <td>unverified</td>
+    <td>unverified</td>
+    <td>3/5</td>
+    <td>Safe</td>
+    <td>unverified (find the organiser's official page)</td>
+    <td>not checked</td>
+    </tr>
+    </tbody>
+    </table></div>
+    <p>Fit scores are qualitative judgements from the sample profile (field match, funding, effort), not predictions. The list is lopsided toward Target; with <code>balanced_mix</code> ON the skill says so and notes that a Safe option needs the user's grades before it can be judged.</p>
+    <p>Sorted by deadline, then score. Deadlines are all unverified, so the order is by score.</p>
+    <h3>4. Excluded options</h3>
+    <div class="tablewrap"><table>
+    <thead>
+    <tr>
+    <th>Option</th>
+    <th>Reason</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>"Guaranteed scholarship after a USD 300 processing fee" (sent to the user by email)</td>
+    <td>Asks for a fee to be selected and guarantees selection. Always removed.</td>
+    </tr>
+    <tr>
+    <td>A programme the user mentions whose page shows last year's deadline</td>
+    <td><code>open_deadlines_only</code> is ON and the deadline has passed. Usual reopening month: unverified.</td>
+    </tr>
+    </tbody>
+    </table></div>
+    <h3>5. Action plan (next steps)</h3>
+    <p>Because no deadline is verified, a dated timeline cannot be built. The skill says so and does not guess.</p>
+    <ol>
+    <li>Open the four official pages and record each deadline, funding detail, eligibility rule and application fee, with the date checked.</li>
+    <li>Ask the two recommenders now. Give them at least 3 weeks.</li>
+    <li>Start the research proposal and the statement of purpose from your real experience; the skill will draft them on request.</li>
+    </ol>
+    <p>Once the deadlines are confirmed, the skill returns a timeline working backwards from each date, with at least 3 days of buffer, and one combined document checklist.</p>
+    <h3>6. Caveats: re-verify on the official site</h3>
+    <ul>
+    <li>Every deadline, amount, eligibility rule (including citizenship) and fee.</li>
+    <li>That each page describes the current cycle and the correct programme.</li>
+    <li>Whether DAAD and Erasmus Mundus are programmes or funding sources you apply to separately, since this changes the plan.</li>
+    </ul>
+    <h3>Why this is a good output</h3>
+    <ul>
+    <li>It does not invent a deadline or an amount to look complete.</li>
+    <li>It separates what it knows (scheme names, official URLs) from what it cannot know without search.</li>
+    <li>It removes the scam offer with a reason, and moves the closed programme to the excluded list.</li>
+    <li>It ends with exact next actions.</li>
+    </ul>
+    </div>
+    <div class="actions">
+      <a class="btn secondary" href="examples/worked-example.md" target="_blank" rel="noopener">Open the Markdown file</a>
+      <a class="btn" href="#find">Build your own settings</a>
+    </div>
+  </section>
+
   <section class="page" id="page-author" aria-labelledby="h-author" hidden>
     <h2 id="h-author">Author</h2>
     <div class="author-card">
@@ -284,8 +419,8 @@ footer { background: var(--pine-dark); color: #c9ded6; padding: 18px 24px; }
 
 <script>
 (function () {
-  var pages = ["home", "find", "author"];
-  var titles = { home: "Home", find: "Find Opportunities", author: "Author" };
+  var pages = ["home", "find", "example", "author"];
+  var titles = { home: "Home", find: "Find Opportunities", example: "Worked Example", author: "Author" };
   var $ = function (id) { return document.getElementById(id); };
 
   function show(name, moveFocus) {
